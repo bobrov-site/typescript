@@ -44,3 +44,14 @@ async function makeRequest (body: IRequestBody): Promise<IRequestResponseSuccess
     const data = response.json()
     return data
 }
+
+function isSuccess (response: IRequestResponseSuccess | IRequestResponseError): response is IRequestResponseSuccess {
+    return response.status === Status.SUCCESS
+}
+
+function getDataBaseId (response: IRequestResponseSuccess | IRequestResponseError): number {
+    if (isSuccess(response)) {
+        return response.data.databaseId
+    }
+    return response.data.errorCode
+}
