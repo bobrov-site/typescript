@@ -21,6 +21,7 @@ class Admin extends UserExtends {
     constructor() {
         const name = 'admin'
         const login = 'adminLogin'
+        // супер вызываетчся первым, если необходимо произвести действие в родительском контрукторе, например консоль лог
         super(name, login)
         this.isAdmin = true
     }
@@ -35,3 +36,16 @@ class Admin extends UserExtends {
         }
     }
 }
+
+class HttpError extends Error {
+    statusCode: number
+
+    constructor(message: string, statusCode: number) {
+        super(message)
+        this.statusCode = statusCode
+    }
+}
+
+const httpError = new HttpError('Not Found', 404)
+console.log(httpError.message)
+console.log(httpError.statusCode)
