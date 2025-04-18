@@ -1,25 +1,25 @@
-enum DeliveryType {
-    HOME = 'home',
-    PICKUP = 'pickup'
-}
+type DeliveryType = 'home' | 'pickup'
 
 class Delivery {
-    type: DeliveryType
     date: Date
-    idShop?: string
-    address?: string
-
-    constructor(type: DeliveryType.HOME, date: Date, address: string)
-    constructor(type: DeliveryType.PICKUP, date: Date, idShop: string)
-    constructor(type: DeliveryType, date: Date, param: string) {
-        this.type = type
+    constructor(date: Date) {
         this.date = date
-        
-        if (type === DeliveryType.HOME) {
-            this.address = param
-        } else if (type === DeliveryType.PICKUP) {
-            this.idShop = param
-        }
+    }
+}
+
+class HomeDelivery extends Delivery {
+    address: string
+    constructor(date: Date, address: string) {
+        super(date)
+        this.address = address
+    }
+}
+
+class PickupDelivery extends Delivery {
+    idShop: string
+    constructor(date: Date, idShop: string) {
+        super(date)
+        this.idShop = idShop
     }
 }
 
@@ -37,8 +37,8 @@ class Product {
 
 
 class Cart {
-    products: Product[] = []
-    delivery: Delivery | null = null
+    private products: Product[] = []
+    private delivery: Delivery | null = null
 
     addProduct(product: Product) {
         this.products.push(product)
@@ -60,7 +60,7 @@ class Cart {
         if (!this.delivery || this.products.length === 0) {
             throw new Error('Cart is empty')
         }
-        return alert(`Total price: ${this.getTotalPrice()}\nDelivery: ${this.delivery.type}`)
+        return alert(`Total price: ${this.getTotalPrice()}\nDelivery: ${this.delivery}`)
     }
     
 }
@@ -69,8 +69,8 @@ const cart1 = new Cart()
 const cart2 = new Cart()
 const product1 = new Product('1', 'Product 1', 100)
 const product2 = new Product('2', 'Product 2', 200)
-const delivery1 = new Delivery(DeliveryType.HOME, new Date(), 'street pushkina')
-const delivery2 = new Delivery(DeliveryType.PICKUP, new Date(), '123')
+const delivery1 = new HomeDelivery(new Date(), 'street pushkina')
+const delivery2 = new PickupDelivery(new Date(), '123')
 cart1.addProduct(product1)
 cart1.addProduct(product2)
 cart1.setDelivery(delivery1)
