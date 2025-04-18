@@ -9,17 +9,16 @@ class Delivery {
     idShop?: string
     address?: string
 
-    constructor(type: DeliveryType, date: Date, idShop?: string)
-    constructor(type: DeliveryType, date: Date, address?: string)
-    constructor(type: DeliveryType, date: Date, idShop?: string, address?: string) {
+    constructor(type: DeliveryType.HOME, date: Date, address: string)
+    constructor(type: DeliveryType.PICKUP, date: Date, idShop: string)
+    constructor(type: DeliveryType, date: Date, param: string) {
         this.type = type
+        this.date = date
+        
         if (type === DeliveryType.HOME) {
-            this.address = address
-            this.date = date
-        }
-        else {
-            this.idShop = idShop
-            this.date = new Date()
+            this.address = param
+        } else if (type === DeliveryType.PICKUP) {
+            this.idShop = param
         }
     }
 }
