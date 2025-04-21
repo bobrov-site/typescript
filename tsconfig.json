@@ -112,4 +112,5 @@
   },
   // "files": ["test.ts"]
   // "include": ["/folder/**/*"]
+  // "extends": "./tsconfig.node.json"
 }
