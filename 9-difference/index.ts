@@ -23,7 +23,7 @@ let b: ObjB = {
 }
 
 
-const makeDiffrence = <A extends object, B extends object>(a: A, b: B): Omit<A, keyof B> => {
+const makeDiffrence = <A extends Record<keyof A, A[keyof A]>, B extends Record<keyof B, B[keyof B]>>(a: A, b: B): Omit<A, keyof B> => {
     const diff: Partial<A> = {}
     const keysA = Object.keys(a)
     const keysB = Object.keys(b)
