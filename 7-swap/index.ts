@@ -9,20 +9,8 @@ const someData: TypeObj = {
 
 function swapKeysAndValues<T extends TypeObj>( data:T ): OutputObj {
     const result: OutputObj = {}
-
     for (let key in data) {
-        let value: number | string
-        switch (typeof data[key]) {
-            case ('number'):
-                value = data[key].toString()
-                break
-            case ('string'):
-                value = data[key]
-                break
-            default:
-                value = data[key]
-        }
-        result[value] = key.toString()
+        result[`${data[key]}`] = `${key}`
                   
     }
     return result
