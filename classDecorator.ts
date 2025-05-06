@@ -8,6 +8,7 @@ interface IUserService {
 class UserService implements IUserService {
     users = 1000
 
+    @methodDecorator()
     getUsersNumber(): number {
         return this.users
     }
@@ -21,6 +22,27 @@ function nullifyUsersAdvanced(users: number) {
     console.log('init users', users)
     return function (target: Function) {
         target.prototype.users = users
+    }
+}
+
+function methodDecorator(
+) {
+    return (
+        target: Object,
+        propertyKey: string | symbol,
+        descriptor: PropertyDescriptor
+    ) => {
+        console.log('target', target)
+        console.log('propertyKey', propertyKey)
+        console.log('descriptor', descriptor)
+        const oldValue = descriptor.value
+        if (oldValue) {
+            descriptor.value = function(this: any) {
+                console.log('new val')
+                return oldValue.call(this)
+            }
+        }
+        return descriptor
     }
 }
 
